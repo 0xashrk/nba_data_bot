@@ -16,6 +16,8 @@ CLI tool for extracting NBA stats and injury data from multiple sources.
 
 ```bash
 cd nba_data_bot
+conda create -n nba_bot python=3.11 -y
+conda activate nba_bot
 pip install -r requirements.txt
 ```
 
