@@ -93,9 +93,54 @@ def get_latest_pdf_url() -> Optional[str]:
     return pdf_links[0]
 
 
+NBA_TEAMS = {
+    "AtlantaHawks", "BostonCeltics", "BrooklynNets", "CharlotteHornets",
+    "ChicagoBulls", "ClevelandCavaliers", "DallasMavericks", "DenverNuggets",
+    "DetroitPistons", "GoldenStateWarriors", "HoustonRockets", "IndianaPacers",
+    "LAClippers", "LosAngelesLakers", "MemphisGrizzlies", "MiamiHeat",
+    "MilwaukeeBucks", "MinnesotaTimberwolves", "NewOrleansPelicans",
+    "NewYorkKnicks", "OklahomaCityThunder", "OrlandoMagic", "Philadelphia76ers",
+    "PhoenixSuns", "PortlandTrailBlazers", "SacramentoKings", "SanAntonioSpurs",
+    "TorontoRaptors", "UtahJazz", "WashingtonWizards",
+}
+
+TEAM_NAME_MAP = {
+    "AtlantaHawks": "Atlanta Hawks",
+    "BostonCeltics": "Boston Celtics",
+    "BrooklynNets": "Brooklyn Nets",
+    "CharlotteHornets": "Charlotte Hornets",
+    "ChicagoBulls": "Chicago Bulls",
+    "ClevelandCavaliers": "Cleveland Cavaliers",
+    "DallasMavericks": "Dallas Mavericks",
+    "DenverNuggets": "Denver Nuggets",
+    "DetroitPistons": "Detroit Pistons",
+    "GoldenStateWarriors": "Golden State Warriors",
+    "HoustonRockets": "Houston Rockets",
+    "IndianaPacers": "Indiana Pacers",
+    "LAClippers": "LA Clippers",
+    "LosAngelesLakers": "Los Angeles Lakers",
+    "MemphisGrizzlies": "Memphis Grizzlies",
+    "MiamiHeat": "Miami Heat",
+    "MilwaukeeBucks": "Milwaukee Bucks",
+    "MinnesotaTimberwolves": "Minnesota Timberwolves",
+    "NewOrleansPelicans": "New Orleans Pelicans",
+    "NewYorkKnicks": "New York Knicks",
+    "OklahomaCityThunder": "Oklahoma City Thunder",
+    "OrlandoMagic": "Orlando Magic",
+    "Philadelphia76ers": "Philadelphia 76ers",
+    "PhoenixSuns": "Phoenix Suns",
+    "PortlandTrailBlazers": "Portland Trail Blazers",
+    "SacramentoKings": "Sacramento Kings",
+    "SanAntonioSpurs": "San Antonio Spurs",
+    "TorontoRaptors": "Toronto Raptors",
+    "UtahJazz": "Utah Jazz",
+    "WashingtonWizards": "Washington Wizards",
+}
+
+
 def parse_injury_pdf(pdf_url: str) -> list[InjuryEntry]:
     """
-    Download and parse an injury report PDF.
+    Download and parse an injury report PDF using text extraction.
 
     Args:
         pdf_url: URL to the injury report PDF
@@ -109,68 +154,114 @@ def parse_injury_pdf(pdf_url: str) -> list[InjuryEntry]:
     entries = []
 
     with pdfplumber.open(BytesIO(response.content)) as pdf:
+        # Extract all text from all pages
+        all_text = ""
         for page in pdf.pages:
-            tables = page.extract_tables()
+            text = page.extract_text()
+            if text:
+                all_text += text + "\n"
 
-            for table in tables:
-                if not table:
-                    continue
+        # Clean up the text - remove page headers/footers
+        lines = all_text.split("\n")
+        cleaned_lines = []
+        for line in lines:
+            line = line.strip()
+            # Skip headers, footers, empty lines
+            if not line:
+                continue
+            if "Injury Report:" in line:
+                continue
+            if line.startswith("GameDate"):
+                continue
+            if re.match(r"^Page\d+of\d+$", line):
+                continue
+            cleaned_lines.append(line)
 
-                for row in table:
-                    if not row or len(row) < 5:
-                        continue
+        # Join lines back - we'll parse the full text
+        full_text = " ".join(cleaned_lines)
 
-                    # Skip header rows
-                    if row[0] and "Game Date" in str(row[0]):
-                        continue
+        # Pattern for game: date time matchup
+        # e.g., "01/17/2026 05:00(ET) UTA@DAL" or just "07:30(ET) BOS@ATL"
+        game_pattern = r"(?:(\d{2}/\d{2}/\d{4})\s+)?(\d{2}:\d{2}\(ET\))\s+([A-Z]{3}@[A-Z]{3})"
 
-                    # Typical columns: Game Date, Game Time, Matchup, Team, Player Name,
-                    #                  Current Status, Reason
-                    try:
-                        # Clean up cell values
-                        cells = [str(c).strip() if c else "" for c in row]
+        # Split by game pattern to process each game separately
+        game_splits = re.split(game_pattern, full_text)
 
-                        # Skip empty rows
-                        if not any(cells):
-                            continue
+        # game_splits will be: [before_first_game, date1, time1, matchup1, content1, date2, time2, matchup2, content2, ...]
+        # Process in groups of 4 (date, time, matchup, content)
+        current_date = ""
+        i = 1  # Skip content before first game
+        while i + 3 <= len(game_splits):
+            date_part = game_splits[i]
+            time_part = game_splits[i + 1]
+            matchup = game_splits[i + 2]
+            content = game_splits[i + 3] if i + 3 < len(game_splits) else ""
 
-                        # Handle different column arrangements
-                        if len(cells) >= 7:
-                            game_date = cells[0]
-                            game_time = cells[1]
-                            matchup = cells[2]
-                            team = cells[3]
-                            player_name = cells[4]
-                            current_status = cells[5].upper()
-                            reason = cells[6]
-                        elif len(cells) >= 5:
-                            # Condensed format
-                            game_date = cells[0]
-                            matchup = cells[1]
-                            team = cells[2]
-                            player_name = cells[3]
-                            current_status = cells[4].upper() if len(cells) > 4 else ""
-                            game_time = ""
-                            reason = cells[5] if len(cells) > 5 else ""
-                        else:
-                            continue
+            if date_part:
+                current_date = date_part
 
-                        # Validate this looks like real data
-                        if not player_name or player_name.lower() in ["player name", "none", ""]:
-                            continue
+            # Now parse content for this game
+            # Content has format: TeamName Player,First Status Reason TeamName Player,First Status Reason ...
 
-                        entries.append(InjuryEntry(
-                            game_date=game_date,
-                            game_time=game_time,
-                            matchup=matchup,
-                            team=team,
-                            player_name=player_name,
-                            current_status=current_status,
-                            reason=reason,
-                        ))
+            # Find all team sections in this content
+            team_positions = []
+            for team_key in NBA_TEAMS:
+                pos = 0
+                while True:
+                    idx = content.find(team_key, pos)
+                    if idx == -1:
+                        break
+                    team_positions.append((idx, team_key))
+                    pos = idx + 1
 
-                    except Exception:
-                        continue
+            # Sort by position
+            team_positions.sort(key=lambda x: x[0])
+
+            # Extract team sections
+            for j, (pos, team_key) in enumerate(team_positions):
+                team_name = TEAM_NAME_MAP.get(team_key, team_key)
+
+                # Get content for this team (until next team or end)
+                start = pos + len(team_key)
+                if j + 1 < len(team_positions):
+                    end = team_positions[j + 1][0]
+                else:
+                    end = len(content)
+
+                team_content = content[start:end].strip()
+
+                # Parse players from team content
+                # Pattern: LastName,FirstName Status Reason
+                # Reason can contain spaces and continues until next player pattern or end
+                player_pattern = r"([A-Za-z\'\-]+(?:Jr\.|Sr\.|II|III|IV)?),([A-Za-z\'\-\.]+)\s+(Out|Questionable|Doubtful|Probable|Available)\s*"
+
+                matches = list(re.finditer(player_pattern, team_content, re.IGNORECASE))
+
+                for k, match in enumerate(matches):
+                    last_name = match.group(1)
+                    first_name = match.group(2)
+                    status = match.group(3).upper()
+
+                    # Reason is from end of this match to start of next match (or end of team content)
+                    reason_start = match.end()
+                    if k + 1 < len(matches):
+                        reason_end = matches[k + 1].start()
+                    else:
+                        reason_end = len(team_content)
+
+                    reason = team_content[reason_start:reason_end].strip()
+
+                    entries.append(InjuryEntry(
+                        game_date=current_date,
+                        game_time=time_part,
+                        matchup=matchup,
+                        team=team_name,
+                        player_name=f"{first_name} {last_name}",
+                        current_status=status,
+                        reason=reason,
+                    ))
+
+            i += 4
 
     return entries
 
