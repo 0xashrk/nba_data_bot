@@ -1,6 +1,6 @@
 # NBA Stats & Injury Report
 
-**Last Updated:** 2026-01-25 21:13 UTC
+**Last Updated:** 2026-01-25 22:14 UTC
 
 ## Data Sources
 
@@ -10,7 +10,7 @@
 | Last 5 Games | teamrankings.com | OK | 30 |
 | Four Factors | stats.nba.com | FAILED | 0 |
 | Defense Stats | stats.nba.com | FAILED | 0 |
-| Injury Report | nba.com (PDF) | OK | 66 |
+| Injury Report | nba.com (PDF) | OK | 101 |
 
 ## Last 5 Games Form
 
@@ -49,6 +49,26 @@
 
 ## Injury Report
 
+### Atlanta Hawks
+
+| Player | Status | Reason |
+|--------|--------|--------|
+| N'Faly Dante | OUT | Injury/Illness-RightKnee;TornACL |
+| RayJ Dennis | DOUBTFUL | GLeague-Two-Way |
+| Nikola Djurisic | DOUBTFUL | GLeague-OnAssignment |
+| Caleb Houstan | DOUBTFUL | GLeague-Two-Way |
+| Asa Newell | DOUBTFUL | GLeague-OnAssignment Injury/Illness-LeftAchilles; |
+| Kristaps Porzingis | OUT | Tendinitis Injury/Illness-LeftKnee;Bone |
+| Zaccharie Risacher | OUT | Contusion |
+
+### Boston Celtics
+
+| Player | Status | Reason |
+|--------|--------|--------|
+| Josh Minott | QUESTIONABLE | Injury/Illness-LeftAnkle;Sprain |
+| Neemias Queta | QUESTIONABLE | Injury/Illness-Illness;Non-Covid |
+| Jayson Tatum | OUT | Injury/Illness-RightAchilles;Repair |
+
 ### Brooklyn Nets
 
 | Player | Status | Reason |
@@ -59,6 +79,28 @@
 | Chaney Johnson | OUT | GLeague-Two-Way |
 | Cam Thomas | OUT | Injury/Illness-LeftAnkle;Sprain |
 | Nolan Traore | OUT | Injury/Illness-N/a;Illness |
+
+### Charlotte Hornets
+
+| Player | Status | Reason |
+|--------|--------|--------|
+| PJ Hall | OUT | GLeague-Two-Way |
+| Liam McNeeley | OUT | GLeague-OnAssignment |
+| Mason Plumlee | OUT | Injury/Illness-RightGroin;Surgery |
+| Antonio Reeves | OUT | GLeague-Two-Way Injury/Illness-LeftHamstring; |
+| Collin Sexton | PROBABLE | Soreness |
+| KJ Simpson | OUT | Injury/Illness-LeftHipFlexor;Strain |
+
+### Cleveland Cavaliers
+
+| Player | Status | Reason |
+|--------|--------|--------|
+| Darius Garland | OUT | Sprain |
+| De'Andre Hunter | QUESTIONABLE | Injury/Illness-RightKnee;Soreness |
+| Chris Livingston | OUT | GLeague-Two-Way |
+| Sam Merrill | QUESTIONABLE | Injury/Illness-RightHand;Sprain Injury/Illness-LeftFoot;Surgery- |
+| Max Strus | OUT | JonesFracture |
+| Luke Travers | OUT | GLeague-Two-Way |
 
 ### Detroit Pistons
 
@@ -76,7 +118,7 @@
 |--------|--------|--------|
 | Jimmy ButlerIII | OUT | Injury/Illness-RightACL;Tear Injury/Illness-LeftSciaticNerve; |
 | Seth Curry | OUT | Irritation |
-| Stephen Curry | QUESTIONABLE | Injury/Illness-RightKnee;Soreness Injury/Illness-LeftToe;Injury |
+| Stephen Curry | AVAILABLE | Injury/Illness-RightKnee;Soreness Injury/Illness-LeftToe;Injury |
 | Al Horford | AVAILABLE | Management |
 | Jonathan Kuminga | OUT | Injury/Illness-LeftKnee;Soreness Injury/Illness-LeftKnee;Injury |
 | De'Anthony Melton | AVAILABLE | Management |
@@ -141,7 +183,17 @@
 | Player | Status | Reason |
 |--------|--------|--------|
 | Colin Castleton | OUT | GLeague-Two-Way Injury/Illness-LeftHighAnkle;Sprain |
-| Franz Wagner | OUT | InjuryManagement |
+| Franz Wagner | OUT | InjuryManagement Injury/Illness-RightGreatToe; |
+
+### Philadelphia 76ers
+
+| Player | Status | Reason |
+|--------|--------|--------|
+| MarJon Beauchamp | DOUBTFUL | GLeague-Two-Way |
+| Johni Broome | DOUBTFUL | GLeague-OnAssignment Injury/Illness-LeftKnee;Injury |
+| Joel Embiid | OUT | Management Injury/Illness-LeftKnee;Injury |
+| Paul George | OUT | Management Injury/Illness-LeftKnee;Injury |
+| Kelly OubreJr. | AVAILABLE | Recovery-Brace |
 
 ### Phoenix Suns
 
@@ -150,6 +202,19 @@
 | Devin Booker | OUT | Injury/Illness-RightAnkle;Sprain |
 | Jordan Goodwin | AVAILABLE | Injury/Illness-Jaw;Sprain(Mask) Injury/Illness-RightHamstring; |
 | Jalen Green | QUESTIONABLE | Injurymanagement |
+
+### Portland Trail Blazers
+
+| Player | Status | Reason |
+|--------|--------|--------|
+| Deni Avdija | QUESTIONABLE | Injury/Illness-LowerBack;Strain |
+| Scoot Henderson | OUT | Injury/Illness-LeftHamstring;Tear Injury/Illness-LeftAchillesTendon; |
+| Damian Lillard | OUT | InjuryManagement |
+| Kris Murray | OUT | Injury/Illness-Lumbar;Strain |
+| Duop Reath | OUT | Injury/Illness-RightFoot;Soreness Injury/Illness-RightKnee; |
+| Matisse Thybulle | OUT | Tendinopathy |
+| Blake Wesley | OUT | Injury/Illness-RightFoot;Fracture Injury/Illness-LeftKnee;Injury |
+| Robert WilliamsIII | QUESTIONABLE | Management |
 
 ### Sacramento Kings
 
