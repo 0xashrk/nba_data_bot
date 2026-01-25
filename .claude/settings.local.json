@@ -1,0 +1,11 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(python main.py:*)",
+      "Bash(python3:*)",
+      "Bash(conda run:*)",
+      "Bash(pip3 install:*)",
+      "Bash(source:*)"
+    ]
+  }
+}

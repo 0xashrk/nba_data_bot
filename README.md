@@ -43,7 +43,7 @@ Output files are saved to `./output/` by default with timestamps (e.g., `advance
 
 ## Live Data URL
 
-A consolidated markdown file is updated hourly and available at:
+A consolidated markdown file is available at:
 
 ```
 https://raw.githubusercontent.com/0xashrk/nba_data_bot/main/data/nba_data.md
@@ -51,41 +51,20 @@ https://raw.githubusercontent.com/0xashrk/nba_data_bot/main/data/nba_data.md
 
 Use this URL with tools like Jina AI to fetch the latest NBA stats programmatically.
 
-## Local Cron Job (launchd)
+## Update & Push to GitHub
 
-The data is updated hourly via a local launchd job that runs on your Mac and pushes to GitHub.
+Run the update script to fetch fresh data and push to GitHub:
 
-**Check status:**
 ```bash
-launchctl list | grep nba-data-bot
-```
-
-**View logs:**
-```bash
-tail -f logs/update.log
-```
-
-**Run manually:**
-```bash
+cd /path/to/nba_data_bot
 ./scripts/update_and_push.sh
 ```
 
-**Stop the cron job:**
-```bash
-launchctl unload ~/Library/LaunchAgents/com.nba-data-bot.update.plist
-```
-
-**Start the cron job:**
-```bash
-launchctl load ~/Library/LaunchAgents/com.nba-data-bot.update.plist
-```
-
-**Remove completely:**
-```bash
-launchctl unload ~/Library/LaunchAgents/com.nba-data-bot.update.plist
-rm ~/Library/LaunchAgents/com.nba-data-bot.update.plist
-rm -rf scripts/ logs/
-```
+This will:
+1. Fetch all NBA data (stats + injuries)
+2. Generate `data/nba_data.md`
+3. Commit and push to GitHub (only if data changed)
+4. Commits are authored as "NBA Bot" (won't count to your GitHub profile)
 
 ## Project Structure
 
@@ -97,10 +76,9 @@ nba_data_bot/
 │   ├── nba_stats.py           # NBA.com stats API client
 │   └── injury_report.py       # Injury report PDF parser
 ├── scripts/
-│   └── update_and_push.sh     # Local cron script
+│   └── update_and_push.sh     # Update and push script
 ├── data/
-│   └── nba_data.md            # Consolidated markdown (auto-updated)
-├── logs/                      # Cron job logs
+│   └── nba_data.md            # Consolidated markdown
 ├── output/                    # Generated CSV/JSON files
 └── requirements.txt
 ```
