@@ -1,6 +1,6 @@
 # NBA Stats & Injury Report
 
-**Last Updated:** 2026-01-25 17:30 UTC
+**Last Updated:** 2026-01-25 19:04 UTC
 
 ## Data Sources
 
@@ -10,7 +10,7 @@
 | Last 5 Games | teamrankings.com | OK | 30 |
 | Four Factors | stats.nba.com | OK | 30 |
 | Defense Stats | stats.nba.com | OK | 30 |
-| Injury Report | nba.com (PDF) | OK | 74 |
+| Injury Report | nba.com (PDF) | OK | 72 |
 
 ## Team Standings & Ratings
 
@@ -165,18 +165,21 @@
 | Cam Thomas | OUT | Injury/Illness-LeftAnkle;Sprain |
 | Nolan Traore | OUT | Injury/Illness-N/a;Illness |
 
-### Denver Nuggets
+### Dallas Mavericks
 
 | Player | Status | Reason |
 |--------|--------|--------|
-| Tamar Bates | OUT | Injury/Illness-LeftFoot;Surgery |
-| Christian Braun | OUT | Injury/Illness-LeftAnkle;Sprain Injury/Illness-RightHamstring; |
-| Aaron Gordon | OUT | Strain Injury/Illness-RightKnee;Bone |
-| Cameron Johnson | OUT | Bruise |
-| Nikola Jokic | OUT | Injury/Illness-LeftKnee;BoneBruise Injury/Illness-RightHamstring; |
-| Jamal Murray | QUESTIONABLE | Inflammation/LeftHipInflammation |
-| Jonas Valanciunas | QUESTIONABLE | Injury/Illness-RightCalf;Strain Injury/Illness-RightAnkle; |
-| Peyton Watson | QUESTIONABLE | Strain/LeftAnkleSprain Injury/Illness-RightKnee;Injury |
+| Max Christie | QUESTIONABLE | Injury/Illness-LeftAnkle;Sprain |
+| Moussa Cisse | DOUBTFUL | GLeague-Two-Way |
+| Anthony Davis | OUT | Injury/Illness-LeftFinger;Sprain |
+| Dante Exum | OUT | Injury/Illness-RightKnee;Surgery Injury/Illness-LeftAnkle;Injury |
+| Cooper Flagg | DOUBTFUL | Management |
+| Kyrie Irving | OUT | Injury/Illness-LeftKnee;Surgery |
+| Miles Kelly | PROBABLE | GLeague-Two-Way |
+| Dereck LivelyII | OUT | Injury/Illness-RightFoot;Surgery |
+| Ryan Nembhard | PROBABLE | GLeague-Two-Way Injury/Illness-LeftKnee;Injury |
+| Klay Thompson | DOUBTFUL | Management |
+| Brandon Williams | QUESTIONABLE | Injury/Illness-RightKnee;Soreness |
 
 ### Detroit Pistons
 
@@ -208,18 +211,6 @@
 | Derrick JonesJr. | OUT | Injury/Illness-RightKnee;Sprain Injury/Illness-LeftKnee;Contusion; |
 | Kawhi Leonard | QUESTIONABLE | Illness |
 | Chris Paul | OUT | NotWithTeam |
-
-### Memphis Grizzlies
-
-| Player | Status | Reason |
-|--------|--------|--------|
-| Santi Aldama | OUT | Management |
-| Brandon Clarke | OUT | Injury/Illness-RightCalf;Strain Injury/Illness-LeftAnkle;Stress |
-| Zach Edey | OUT | Reaction |
-| Ty Jerome | OUT | Injury/Illness-RightCalf;Strain |
-| Jahmai Mashack | OUT | GLeague-Two-Way |
-| Ja Morant | OUT | Injury/Illness-LeftElbow;UCLSprain Injury/Illness-LeftGreatToe; |
-| Scotty PippenJr. | OUT | SurgeryRecovery |
 
 ### Milwaukee Bucks
 
@@ -261,6 +252,13 @@
 | Nikola Topic | OUT | Injury/Illness-N/a;SurgicalRecovery Injury/Illness-RightHip; |
 | Aaron Wiggins | QUESTIONABLE | Impingement Injury/Illness-RightHamstring; |
 | Jalen Williams | OUT | Strain |
+
+### Orlando Magic
+
+| Player | Status | Reason |
+|--------|--------|--------|
+| Colin Castleton | OUT | GLeague-Two-Way Injury/Illness-LeftHighAnkle;Sprain |
+| Franz Wagner | OUT | InjuryManagement |
 
 ### Phoenix Suns
 
