@@ -1,6 +1,6 @@
 # NBA Stats & Injury Report
 
-**Last Updated:** 2026-01-25 20:16 UTC
+**Last Updated:** 2026-01-25 21:13 UTC
 
 ## Data Sources
 
@@ -10,7 +10,7 @@
 | Last 5 Games | teamrankings.com | OK | 30 |
 | Four Factors | stats.nba.com | FAILED | 0 |
 | Defense Stats | stats.nba.com | FAILED | 0 |
-| Injury Report | nba.com (PDF) | OK | 73 |
+| Injury Report | nba.com (PDF) | OK | 66 |
 
 ## Last 5 Games Form
 
@@ -53,28 +53,12 @@
 
 | Player | Status | Reason |
 |--------|--------|--------|
-| Noah Clowney | DOUBTFUL | Injury/Illness-Back;Soreness |
+| Noah Clowney | OUT | Injury/Illness-Back;Soreness |
 | Tyson Etienne | OUT | GLeague-Two-Way Injury/Illness-RightKnee;Surgery, |
 | Haywood Highsmith | OUT | InjuryRecovery |
 | Chaney Johnson | OUT | GLeague-Two-Way |
 | Cam Thomas | OUT | Injury/Illness-LeftAnkle;Sprain |
 | Nolan Traore | OUT | Injury/Illness-N/a;Illness |
-
-### Dallas Mavericks
-
-| Player | Status | Reason |
-|--------|--------|--------|
-| Max Christie | QUESTIONABLE | Injury/Illness-LeftAnkle;Sprain |
-| Moussa Cisse | DOUBTFUL | GLeague-Two-Way |
-| Anthony Davis | OUT | Injury/Illness-LeftFinger;Sprain |
-| Dante Exum | OUT | Injury/Illness-RightKnee;Surgery Injury/Illness-LeftAnkle;Injury |
-| Cooper Flagg | DOUBTFUL | Management |
-| Kyrie Irving | OUT | Injury/Illness-LeftKnee;Surgery |
-| Miles Kelly | PROBABLE | GLeague-Two-Way |
-| Dereck LivelyII | OUT | Injury/Illness-RightFoot;Surgery |
-| Ryan Nembhard | PROBABLE | GLeague-Two-Way Injury/Illness-LeftKnee;Injury |
-| Klay Thompson | DOUBTFUL | Management |
-| Brandon Williams | QUESTIONABLE | Injury/Illness-RightKnee;Soreness |
 
 ### Detroit Pistons
 
@@ -107,16 +91,20 @@
 | Kawhi Leonard | QUESTIONABLE | Illness |
 | Chris Paul | OUT | NotWithTeam |
 
-### Milwaukee Bucks
+### Miami Heat
 
 | Player | Status | Reason |
 |--------|--------|--------|
-| Alex Antetokounmpo | OUT | GLeague-Two-Way |
-| Giannis Antetokounmpo | OUT | Injury/Illness-RightCalf;Strain |
-| AJ Green | QUESTIONABLE | Injury/Illness-N/a;Illness Injury/Illness-RightObliqueMuscle; |
-| Kevin PorterJr. | OUT | Strain |
-| Taurean Prince | OUT | Injury/Illness-Neck;Surgery |
-| Gary TrentJr. | PROBABLE | Injury/Illness-N/a;Illness NOP@SAS |
+| Vladislav Goldin | OUT | GLeague-Two-Way Injury/Illness-RightCostochondral; |
+| Tyler Herro | OUT | InjurytotheRibs |
+| Kasparas Jakucionis | QUESTIONABLE | Injury/Illness-Facial;Contusion |
+| Jaime JaquezJr. | AVAILABLE | Injury/Illness-LeftKnee;Sprain |
+| Pelle Larsson | AVAILABLE | Injury/Illness-Left3rdMallet;Finger |
+| Davion Mitchell | DOUBTFUL | Injury/Illness-LeftShoulder;Sprain |
+| Norman Powell | QUESTIONABLE | Injury/Illness-LowBack;Tightness |
+| Terry Rozier | OUT | NotWithTeam Injury/Illness-RightHamstring; |
+| Kel'el Ware | OUT | Strain Injury/Illness-LeftHamstring; |
+| Andrew Wiggins | PROBABLE | Tightness |
 
 ### Minnesota Timberwolves
 
