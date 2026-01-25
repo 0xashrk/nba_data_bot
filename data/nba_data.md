@@ -1,6 +1,6 @@
 # NBA Stats & Injury Report
 
-**Last Updated:** 2026-01-25 19:04 UTC
+**Last Updated:** 2026-01-25 19:46 UTC
 
 ## Data Sources
 
@@ -10,7 +10,7 @@
 | Last 5 Games | teamrankings.com | OK | 30 |
 | Four Factors | stats.nba.com | OK | 30 |
 | Defense Stats | stats.nba.com | OK | 30 |
-| Injury Report | nba.com (PDF) | OK | 72 |
+| Injury Report | nba.com (PDF) | OK | 73 |
 
 ## Team Standings & Ratings
 
@@ -185,9 +185,9 @@
 
 | Player | Status | Reason |
 |--------|--------|--------|
-| Cade Cunningham | PROBABLE | Management |
+| Cade Cunningham | AVAILABLE | Management |
 | Isaac Jones | OUT | GLeague-OnAssignment |
-| Caris LeVert | DOUBTFUL | Injury/Illness-Illness;Illness |
+| Caris LeVert | OUT | Injury/Illness-Illness;Illness |
 | Wendell MooreJr. | OUT | GLeague-Two-Way |
 | Tolu Smith | OUT | GLeague-Two-Way |
 
@@ -283,7 +283,8 @@
 |--------|--------|--------|
 | Harrison Ingram | OUT | GLeague-Two-Way |
 | David JonesGarcia | OUT | GLeague-Two-Way Injury/Illness-LeftAdductor; |
-| Luke Kornet | QUESTIONABLE | Tightness |
+| Luke Kornet | QUESTIONABLE | Tightness Injury/Illness-RightShoulder; |
+| Jordan McLaughlin | QUESTIONABLE | Contusion |
 | Stanley Umude | OUT | GLeague-Two-Way TOR@OKC |
 
 ### Toronto Raptors
