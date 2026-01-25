@@ -1,6 +1,6 @@
 # NBA Stats & Injury Report
 
-**Last Updated:** 2026-01-25 22:14 UTC
+**Last Updated:** 2026-01-25 23:14 UTC
 
 ## Data Sources
 
@@ -10,7 +10,7 @@
 | Last 5 Games | teamrankings.com | OK | 30 |
 | Four Factors | stats.nba.com | FAILED | 0 |
 | Defense Stats | stats.nba.com | FAILED | 0 |
-| Injury Report | nba.com (PDF) | OK | 101 |
+| Injury Report | nba.com (PDF) | OK | 121 |
 
 ## Last 5 Games Form
 
@@ -91,6 +91,16 @@
 | Collin Sexton | PROBABLE | Soreness |
 | KJ Simpson | OUT | Injury/Illness-LeftHipFlexor;Strain |
 
+### Chicago Bulls
+
+| Player | Status | Reason |
+|--------|--------|--------|
+| Zach Collins | OUT | Injury/Illness-Right1stToe;Sprain |
+| Noa Essengue | OUT | Injury/Illness-LeftShoulder;Surgery |
+| Tre Jones | DOUBTFUL | Injury/Illness-LeftHamstring;Strain |
+| Yuki Kawamura | OUT | GLeague-Two-Way |
+| Emanuel Miller | OUT | GLeague-Two-Way MEM@HOU |
+
 ### Cleveland Cavaliers
 
 | Player | Status | Reason |
@@ -123,6 +133,28 @@
 | Jonathan Kuminga | OUT | Injury/Illness-LeftKnee;Soreness Injury/Illness-LeftKnee;Injury |
 | De'Anthony Melton | AVAILABLE | Management |
 
+### Houston Rockets
+
+| Player | Status | Reason |
+|--------|--------|--------|
+| Steven Adams | OUT | Injury/Illness-LeftAnkle;Sprain |
+| Isaiah Crawford | OUT | GLeague-Two-Way |
+| JD Davison | OUT | GLeague-Two-Way |
+| Aaron Holiday | PROBABLE | Injury/Illness-LowBack;Strain |
+| Tristen Newton | OUT | GLeague-Two-Way |
+| Fred VanVleet | OUT | Injury/Illness-RightKnee;ACLRepair POR@BOS |
+
+### Indiana Pacers
+
+| Player | Status | Reason |
+|--------|--------|--------|
+| Tyrese Haliburton | OUT | Tear |
+| Quenton Jackson | QUESTIONABLE | Injury/Illness-RightAnkle;Sprain |
+| Bennedict Mathurin | QUESTIONABLE | Injury/Illness-RightThumb;Sprain |
+| Taelon Peter | OUT | GLeague-Two-Way |
+| Ethan Thompson | PROBABLE | GLeague-Two-Way Injury/Illness-RightFoot;Stress |
+| Obi Toppin | OUT | Fracture |
+
 ### LA Clippers
 
 | Player | Status | Reason |
@@ -131,7 +163,15 @@
 | Bogdan Bogdanovic | OUT | Management |
 | Derrick JonesJr. | OUT | Injury/Illness-RightKnee;Sprain Injury/Illness-LeftKnee;Contusion; |
 | Kawhi Leonard | QUESTIONABLE | Illness |
-| Chris Paul | OUT | NotWithTeam |
+| Chris Paul | OUT | NotWithTeam Injury/Illness-RightAchillesTendon; |
+
+### Los Angeles Lakers
+
+| Player | Status | Reason |
+|--------|--------|--------|
+| Jake LaRavia | QUESTIONABLE | Injury/Illness-LeftQuad;Contusion |
+| Austin Reaves | OUT | Injury/Illness-LeftCalf;Strain |
+| Adou Thiero | OUT | Injury/Illness-RightMcl;Sprain |
 
 ### Miami Heat
 
@@ -142,8 +182,8 @@
 | Kasparas Jakucionis | QUESTIONABLE | Injury/Illness-Facial;Contusion |
 | Jaime JaquezJr. | AVAILABLE | Injury/Illness-LeftKnee;Sprain |
 | Pelle Larsson | AVAILABLE | Injury/Illness-Left3rdMallet;Finger |
-| Davion Mitchell | DOUBTFUL | Injury/Illness-LeftShoulder;Sprain |
-| Norman Powell | QUESTIONABLE | Injury/Illness-LowBack;Tightness |
+| Davion Mitchell | OUT | Injury/Illness-LeftShoulder;Sprain |
+| Norman Powell | PROBABLE | Injury/Illness-LowBack;Tightness |
 | Terry Rozier | OUT | NotWithTeam Injury/Illness-RightHamstring; |
 | Kel'el Ware | OUT | Strain Injury/Illness-LeftHamstring; |
 | Andrew Wiggins | PROBABLE | Tightness |
@@ -161,9 +201,9 @@
 | Player | Status | Reason |
 |--------|--------|--------|
 | Trey Alexander | OUT | GLeague-Two-Way |
-| Jose Alvarado | QUESTIONABLE | Injury/Illness-LeftOblique;Strain |
+| Jose Alvarado | AVAILABLE | Injury/Illness-LeftOblique;Strain |
 | Hunter Dickinson | OUT | GLeague-Two-Way |
-| Trey MurphyIII | PROBABLE | Injury/Illness-RightHand;Soreness |
+| Trey MurphyIII | AVAILABLE | Injury/Illness-RightHand;Soreness |
 | Dejounte Murray | OUT | Injury/Illness-RightAchilles;Rupture |
 
 ### Oklahoma City Thunder
@@ -175,7 +215,7 @@
 | Ajay Mitchell | OUT | Injury/Illness-Abdominal;Strain Injury/Illness-RightACL;Surgical |
 | Thomas Sorber | OUT | Recovery |
 | Nikola Topic | OUT | Injury/Illness-N/a;SurgicalRecovery Injury/Illness-RightHip; |
-| Aaron Wiggins | QUESTIONABLE | Impingement Injury/Illness-RightHamstring; |
+| Aaron Wiggins | AVAILABLE | Impingement Injury/Illness-RightHamstring; |
 | Jalen Williams | OUT | Strain |
 
 ### Orlando Magic
@@ -190,8 +230,8 @@
 | Player | Status | Reason |
 |--------|--------|--------|
 | MarJon Beauchamp | DOUBTFUL | GLeague-Two-Way |
-| Johni Broome | DOUBTFUL | GLeague-OnAssignment Injury/Illness-LeftKnee;Injury |
-| Joel Embiid | OUT | Management Injury/Illness-LeftKnee;Injury |
+| Johni Broome | DOUBTFUL | GLeague-OnAssignment |
+| Joel Embiid | OUT | Injury/Illness-LeftKnee;Injury Management Injury/Illness-LeftKnee;Injury |
 | Paul George | OUT | Management Injury/Illness-LeftKnee;Injury |
 | Kelly OubreJr. | AVAILABLE | Recovery-Brace |
 
@@ -230,9 +270,9 @@
 | Player | Status | Reason |
 |--------|--------|--------|
 | Harrison Ingram | OUT | GLeague-Two-Way |
-| David JonesGarcia | OUT | GLeague-Two-Way Injury/Illness-LeftAdductor; |
-| Luke Kornet | QUESTIONABLE | Tightness Injury/Illness-RightShoulder; |
-| Jordan McLaughlin | QUESTIONABLE | Contusion |
+| David JonesGarcia | OUT | GLeague-Two-Way |
+| Luke Kornet | AVAILABLE | - |
+| Jordan McLaughlin | AVAILABLE | - |
 | Stanley Umude | OUT | GLeague-Two-Way TOR@OKC |
 
 ### Toronto Raptors
@@ -240,7 +280,7 @@
 | Player | Status | Reason |
 |--------|--------|--------|
 | Chucky Hepburn | OUT | GLeague-Two-Way |
-| Collin Murray-Boyles | QUESTIONABLE | Injury/Illness-LeftThumb;Contusion |
+| Collin Murray-Boyles | OUT | Injury/Illness-LeftThumb;Contusion |
 | Jakob Poeltl | OUT | Injury/Illness-Back;Lower;strain |
 | Immanuel Quickley | QUESTIONABLE | Injury/Illness-RightAnkle;Soreness |
-| Ja'Kobe Walter | QUESTIONABLE | Injury/Illness-RightHip;Pointer |
+| Ja'Kobe Walter | AVAILABLE | Injury/Illness-RightHip;Pointer |
