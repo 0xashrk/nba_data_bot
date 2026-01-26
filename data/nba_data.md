@@ -1,6 +1,6 @@
 # NBA Stats & Injury Report
 
-**Last Updated:** 2026-01-26 15:22 UTC
+**Last Updated:** 2026-01-26 16:24 UTC
 
 ## Data Sources
 
@@ -10,7 +10,7 @@
 | Last 5 Games | teamrankings.com | OK | 30 |
 | Four Factors | stats.nba.com | FAILED | 0 |
 | Defense Stats | stats.nba.com | FAILED | 0 |
-| Injury Report | nba.com (PDF) | OK | 57 |
+| Injury Report | nba.com (PDF) | OK | 59 |
 
 ## Last 5 Games Form
 
@@ -65,6 +65,7 @@
 
 | Player | Status | Reason |
 |--------|--------|--------|
+| Luka Garza | QUESTIONABLE | Injury/Illness-Illness;Non-Covid |
 | Josh Minott | QUESTIONABLE | Injury/Illness-LeftAnkle;Sprain |
 | Neemias Queta | QUESTIONABLE | Injury/Illness-Illness;Non-Covid |
 | Jayson Tatum | OUT | Injury/Illness-RightAchilles;Repair |
@@ -97,8 +98,8 @@
 | Darius Garland | OUT | Sprain |
 | De'Andre Hunter | QUESTIONABLE | Injury/Illness-RightKnee;Soreness |
 | Chris Livingston | OUT | GLeague-Two-Way |
-| Sam Merrill | QUESTIONABLE | Injury/Illness-RightHand;Sprain |
-| Max Strus | OUT | Injury/Illness-LeftFoot;Surgery- JonesFracture |
+| Sam Merrill | QUESTIONABLE | Injury/Illness-RightHand;Sprain Injury/Illness-LeftFoot;Surgery- |
+| Max Strus | OUT | JonesFracture |
 | Luke Travers | OUT | GLeague-Two-Way |
 
 ### Houston Rockets
@@ -142,6 +143,7 @@
 
 | Player | Status | Reason |
 |--------|--------|--------|
+| Charles Bassey | OUT | NotWithTeam |
 | MarJon Beauchamp | OUT | GLeague-Two-Way |
 | Johni Broome | OUT | GLeague-OnAssignment Injury/Illness-LeftKnee;Injury |
 | Joel Embiid | OUT | Management Injury/Illness-LeftKnee;Injury |
@@ -153,8 +155,8 @@
 | Player | Status | Reason |
 |--------|--------|--------|
 | Deni Avdija | QUESTIONABLE | Injury/Illness-LowerBack;Strain |
-| Scoot Henderson | OUT | Injury/Illness-LeftHamstring;Tear |
-| Damian Lillard | OUT | Injury/Illness-LeftAchillesTendon; InjuryManagement |
+| Scoot Henderson | OUT | Injury/Illness-LeftHamstring;Tear Injury/Illness-LeftAchillesTendon; |
+| Damian Lillard | OUT | InjuryManagement |
 | Kris Murray | OUT | Injury/Illness-Lumbar;Strain |
 | Duop Reath | OUT | Injury/Illness-RightFoot;Soreness Injury/Illness-RightKnee; |
 | Matisse Thybulle | OUT | Tendinopathy |
