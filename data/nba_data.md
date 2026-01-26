@@ -1,6 +1,6 @@
 # NBA Stats & Injury Report
 
-**Last Updated:** 2026-01-26 14:22 UTC
+**Last Updated:** 2026-01-26 15:22 UTC
 
 ## Data Sources
 
@@ -54,10 +54,10 @@
 | Player | Status | Reason |
 |--------|--------|--------|
 | N'Faly Dante | OUT | Injury/Illness-RightKnee;TornACL |
-| RayJ Dennis | DOUBTFUL | GLeague-Two-Way |
-| Nikola Djurisic | DOUBTFUL | GLeague-OnAssignment |
-| Caleb Houstan | DOUBTFUL | GLeague-Two-Way |
-| Asa Newell | DOUBTFUL | GLeague-OnAssignment Injury/Illness-LeftAchilles; |
+| RayJ Dennis | OUT | GLeague-Two-Way |
+| Nikola Djurisic | OUT | GLeague-OnAssignment |
+| Caleb Houstan | OUT | GLeague-Two-Way |
+| Asa Newell | OUT | GLeague-OnAssignment Injury/Illness-LeftAchilles; |
 | Kristaps Porzingis | OUT | Tendinitis Injury/Illness-LeftKnee;Bone |
 | Zaccharie Risacher | OUT | Contusion |
 
@@ -142,8 +142,8 @@
 
 | Player | Status | Reason |
 |--------|--------|--------|
-| MarJon Beauchamp | DOUBTFUL | GLeague-Two-Way |
-| Johni Broome | DOUBTFUL | GLeague-OnAssignment Injury/Illness-LeftKnee;Injury |
+| MarJon Beauchamp | OUT | GLeague-Two-Way |
+| Johni Broome | OUT | GLeague-OnAssignment Injury/Illness-LeftKnee;Injury |
 | Joel Embiid | OUT | Management Injury/Illness-LeftKnee;Injury |
 | Paul George | OUT | Management Injury/Illness-LeftKnee;Injury |
 | Kelly OubreJr. | AVAILABLE | Recovery-Brace |
