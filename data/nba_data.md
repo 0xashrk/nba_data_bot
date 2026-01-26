@@ -1,6 +1,6 @@
 # NBA Stats & Injury Report
 
-**Last Updated:** 2026-01-26 17:24 UTC
+**Last Updated:** 2026-01-26 18:24 UTC
 
 ## Data Sources
 
@@ -78,7 +78,7 @@
 | Liam McNeeley | OUT | GLeague-OnAssignment |
 | Mason Plumlee | OUT | Injury/Illness-RightGroin;Surgery |
 | Antonio Reeves | OUT | GLeague-Two-Way Injury/Illness-LeftHamstring; |
-| Collin Sexton | PROBABLE | Soreness |
+| Collin Sexton | AVAILABLE | Soreness |
 | KJ Simpson | OUT | Injury/Illness-LeftHipFlexor;Strain |
 
 ### Chicago Bulls
@@ -87,7 +87,7 @@
 |--------|--------|--------|
 | Zach Collins | OUT | Injury/Illness-Right1stToe;Sprain |
 | Noa Essengue | OUT | Injury/Illness-LeftShoulder;Surgery |
-| Tre Jones | DOUBTFUL | Injury/Illness-LeftHamstring;Strain |
+| Tre Jones | OUT | Injury/Illness-LeftHamstring;Strain |
 | Yuki Kawamura | OUT | GLeague-Two-Way |
 | Emanuel Miller | OUT | GLeague-Two-Way MEM@HOU |
 
@@ -128,7 +128,7 @@
 
 | Player | Status | Reason |
 |--------|--------|--------|
-| Jake LaRavia | QUESTIONABLE | Injury/Illness-LeftQuad;Contusion |
+| Jake LaRavia | AVAILABLE | Injury/Illness-LeftQuad;Contusion |
 | Austin Reaves | OUT | Injury/Illness-LeftCalf;Strain |
 | Adou Thiero | OUT | Injury/Illness-RightMcl;Sprain |
 
@@ -143,7 +143,7 @@
 
 | Player | Status | Reason |
 |--------|--------|--------|
-| Charles Bassey | OUT | NotWithTeam |
+| Charles Bassey | OUT | GLeague-OnAssignment |
 | MarJon Beauchamp | OUT | GLeague-Two-Way |
 | Johni Broome | OUT | GLeague-OnAssignment Injury/Illness-LeftKnee;Injury |
 | Joel Embiid | OUT | Management Injury/Illness-LeftKnee;Injury |
