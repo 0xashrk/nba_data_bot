@@ -1,6 +1,6 @@
 # NBA Stats & Injury Report
 
-**Last Updated:** 2026-01-26 01:08 UTC
+**Last Updated:** 2026-01-26 03:51 UTC
 
 ## Data Sources
 
