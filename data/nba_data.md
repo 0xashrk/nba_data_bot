@@ -1,6 +1,6 @@
 # NBA Stats & Injury Report
 
-**Last Updated:** 2026-01-25 23:14 UTC
+**Last Updated:** 2026-01-26 01:08 UTC
 
 ## Data Sources
 
@@ -10,7 +10,7 @@
 | Last 5 Games | teamrankings.com | OK | 30 |
 | Four Factors | stats.nba.com | FAILED | 0 |
 | Defense Stats | stats.nba.com | FAILED | 0 |
-| Injury Report | nba.com (PDF) | OK | 121 |
+| Injury Report | nba.com (PDF) | OK | 122 |
 
 ## Last 5 Games Form
 
@@ -162,8 +162,9 @@
 | Bradley Beal | OUT | Injury/Illness-LeftHip;Fracture Injury/Illness-LeftHamstring;Injury |
 | Bogdan Bogdanovic | OUT | Management |
 | Derrick JonesJr. | OUT | Injury/Illness-RightKnee;Sprain Injury/Illness-LeftKnee;Contusion; |
-| Kawhi Leonard | QUESTIONABLE | Illness |
-| Chris Paul | OUT | NotWithTeam Injury/Illness-RightAchillesTendon; |
+| Kawhi Leonard | AVAILABLE | Illness |
+| Chris Paul | OUT | NotWithTeam Injury/Illness-RightHamstring; |
+| TyTy WashingtonJr. | OUT | Soreness Injury/Illness-RightAchillesTendon; |
 
 ### Los Angeles Lakers
 
@@ -179,14 +180,14 @@
 |--------|--------|--------|
 | Vladislav Goldin | OUT | GLeague-Two-Way Injury/Illness-RightCostochondral; |
 | Tyler Herro | OUT | InjurytotheRibs |
-| Kasparas Jakucionis | QUESTIONABLE | Injury/Illness-Facial;Contusion |
+| Kasparas Jakucionis | AVAILABLE | Injury/Illness-Facial;Contusion |
 | Jaime JaquezJr. | AVAILABLE | Injury/Illness-LeftKnee;Sprain |
 | Pelle Larsson | AVAILABLE | Injury/Illness-Left3rdMallet;Finger |
 | Davion Mitchell | OUT | Injury/Illness-LeftShoulder;Sprain |
-| Norman Powell | PROBABLE | Injury/Illness-LowBack;Tightness |
+| Norman Powell | AVAILABLE | Injury/Illness-LowBack;Tightness |
 | Terry Rozier | OUT | NotWithTeam Injury/Illness-RightHamstring; |
 | Kel'el Ware | OUT | Strain Injury/Illness-LeftHamstring; |
-| Andrew Wiggins | PROBABLE | Tightness |
+| Andrew Wiggins | AVAILABLE | Tightness |
 
 ### Minnesota Timberwolves
 
@@ -230,8 +231,8 @@
 | Player | Status | Reason |
 |--------|--------|--------|
 | MarJon Beauchamp | DOUBTFUL | GLeague-Two-Way |
-| Johni Broome | DOUBTFUL | GLeague-OnAssignment |
-| Joel Embiid | OUT | Injury/Illness-LeftKnee;Injury Management Injury/Illness-LeftKnee;Injury |
+| Johni Broome | DOUBTFUL | GLeague-OnAssignment Injury/Illness-LeftKnee;Injury |
+| Joel Embiid | OUT | Management Injury/Illness-LeftKnee;Injury |
 | Paul George | OUT | Management Injury/Illness-LeftKnee;Injury |
 | Kelly OubreJr. | AVAILABLE | Recovery-Brace |
 
@@ -241,7 +242,7 @@
 |--------|--------|--------|
 | Devin Booker | OUT | Injury/Illness-RightAnkle;Sprain |
 | Jordan Goodwin | AVAILABLE | Injury/Illness-Jaw;Sprain(Mask) Injury/Illness-RightHamstring; |
-| Jalen Green | QUESTIONABLE | Injurymanagement |
+| Jalen Green | OUT | Injurymanagement |
 
 ### Portland Trail Blazers
 
@@ -282,5 +283,5 @@
 | Chucky Hepburn | OUT | GLeague-Two-Way |
 | Collin Murray-Boyles | OUT | Injury/Illness-LeftThumb;Contusion |
 | Jakob Poeltl | OUT | Injury/Illness-Back;Lower;strain |
-| Immanuel Quickley | QUESTIONABLE | Injury/Illness-RightAnkle;Soreness |
+| Immanuel Quickley | AVAILABLE | Injury/Illness-RightAnkle;Soreness |
 | Ja'Kobe Walter | AVAILABLE | Injury/Illness-RightHip;Pointer |
