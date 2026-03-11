@@ -1,267 +1,351 @@
 #!/usr/bin/env python3
 """
-Tennis Data Bot - template CLI for tennis pipeline outputs.
+Tennis Data Bot - CLI tool for extracting tennis schedule, rankings, stats, and injury signals.
 
 Usage:
-    python3 main_tennis.py markdown         # Generate tennis markdown templates
-    python3 main_tennis.py docs             # Print the tennis spec document path
+    python main_tennis.py all                # Fetch all tennis sources
+    python main_tennis.py schedule           # ESPN scoreboard schedule snapshot
+    python main_tennis.py rankings           # ATP/WTA rankings
+    python main_tennis.py stats              # Season stats for top-ranked players
+    python main_tennis.py injuries           # News-based injury and withdrawal signals
+    python main_tennis.py features           # Derived player feature table
+    python main_tennis.py markdown           # Consolidated markdown report
 
 Options:
-    --output DIR        Output directory for markdown files (default: ./data)
-    --log-dir DIR       Run-log directory (default: ./outputs)
+    --format csv|json     Output format (default: csv)
+    --output DIR          Output directory (default: ./output)
 """
 
 import argparse
+import os
 import sys
-from datetime import datetime, timezone
+from datetime import datetime
 from pathlib import Path
 
+import pandas as pd
 
-REPO_ROOT = Path(__file__).resolve().parent
-DOCS_PATH = REPO_ROOT / "docs" / "TENNIS_Data_Bot_Spec.md"
-
-
-def utc_display_timestamp() -> str:
-    """Return a human-readable UTC timestamp."""
-    return datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M UTC")
-
-
-def utc_file_timestamp() -> str:
-    """Return a compact UTC timestamp for filenames."""
-    return datetime.now(timezone.utc).strftime("%Y-%m-%d_%H%M%S")
+from scraper import (
+    get_tennis_features,
+    get_tennis_injuries,
+    get_tennis_rankings,
+    get_tennis_schedule,
+    get_tennis_stats,
+)
 
 
-def render_tennis_data(last_updated: str) -> str:
-    return f"""# Tennis Match Data
+def save_dataframe(df: pd.DataFrame, name: str, output_dir: str, fmt: str, timestamp: str = None) -> str:
+    """Save a DataFrame and return the output path."""
+    if timestamp is None:
+        timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+    Path(output_dir).mkdir(parents=True, exist_ok=True)
 
-**Last Updated:** {last_updated}
-**Mode:** Template scaffold
-**Spec:** `docs/TENNIS_Data_Bot_Spec.md`
+    if fmt == "csv":
+        filepath = os.path.join(output_dir, f"{name}_{timestamp}.csv")
+        df.to_csv(filepath, index=False)
+    else:
+        filepath = os.path.join(output_dir, f"{name}_{timestamp}.json")
+        df.to_json(filepath, orient="records", indent=2)
 
-## Data Sources
-
-| Source | Website | Status | Records | Notes |
-|--------|---------|--------|---------|-------|
-| Match Schedule | Official ATP/WTA pages | TEMPLATE | 0 | Placeholder until schedule ingestion lands |
-| Rankings Snapshot | ATP/WTA rankings | TEMPLATE | 0 | Placeholder until rankings ingestion lands |
-| Surface Stats | Historical performance feeds | TEMPLATE | 0 | Placeholder until stats ingestion lands |
-| Availability | Tournament/news sources | TEMPLATE | 0 | Placeholder until injury and withdrawal ingestion lands |
-| Market Mapping | External execution venue | OPTIONAL | 0 | Placeholder until market adapter lands |
-
-## Candidate Matchups
-
-| match_id | event_name | tour | surface | round | scheduled_utc | player_a | player_b | model_win_prob_a | model_win_prob_b | confidence_grade |
-|----------|------------|------|---------|-------|---------------|----------|----------|------------------|------------------|------------------|
-| example_masters_r32_player_a_player_b_2026-03-11 | Example Masters | ATP | hard | R32 | 2026-03-11 12:00 UTC | Player A | Player B | TBD | TBD | TBD |
-
-## Matchup Features
-
-| match_id | surface | rank_delta | elo_delta_global | elo_delta_surface | hold_break_composite_delta | form_delta | fatigue_delta | injury_flag_a | injury_flag_b | withdrawal_risk_score_a | withdrawal_risk_score_b |
-|----------|---------|------------|------------------|-------------------|----------------------------|------------|---------------|---------------|---------------|-------------------------|-------------------------|
-| example_masters_r32_player_a_player_b_2026-03-11 | hard | TBD | TBD | TBD | TBD | TBD | TBD | false | false | TBD | TBD |
-
-## Availability Watch
-
-| player | status | source | source_ts | confidence | note |
-|--------|--------|--------|-----------|------------|------|
-| Player A | available | placeholder | TBD | 0.00 | Replace with normalized availability feed |
-| Player B | questionable | placeholder | TBD | 0.00 | Replace with normalized availability feed |
-
-## Market Mapping
-
-| match_id | external_event_slug | external_market_id | side_a_token | side_b_token | last_seen_price_a | last_seen_price_b | market_snapshot_ts |
-|----------|---------------------|--------------------|--------------|--------------|-------------------|-------------------|--------------------|
-| example_masters_r32_player_a_player_b_2026-03-11 | TBD | TBD | TBD | TBD | TBD | TBD | TBD |
-
-## Publishing Notes
-
-- Generated by `python3 main_tennis.py markdown --output ./data`
-- Replace placeholder rows with live data once tennis ingestion commands land.
-"""
+    return filepath
 
 
-def render_tennis_players(last_updated: str) -> str:
-    return f"""# Tennis Player Snapshots
-
-**Last Updated:** {last_updated}
-**Mode:** Template scaffold
-**Spec:** `docs/TENNIS_Data_Bot_Spec.md`
-
-## Snapshot Coverage
-
-| Source | Website | Status | Records | Notes |
-|--------|---------|--------|---------|-------|
-| Rankings Snapshot | ATP/WTA rankings | TEMPLATE | 0 | Placeholder until rankings ingestion lands |
-| Player Context | Cached player metadata | TEMPLATE | 0 | Placeholder until identity mapping lands |
-
-## Player Snapshots
-
-| player_id | name | ranking | elo_global | elo_surface | age | handedness | country |
-|-----------|------|---------|------------|-------------|-----|------------|---------|
-| example-player-a | Player A | TBD | TBD | TBD | TBD | TBD | TBD |
-| example-player-b | Player B | TBD | TBD | TBD | TBD | TBD | TBD |
-"""
+def df_to_markdown(df: pd.DataFrame, columns: list[str] = None, limit: int = None) -> str:
+    """Convert a DataFrame to a markdown table."""
+    if columns:
+        available_columns = [column for column in columns if column in df.columns]
+        df = df[available_columns]
+    if limit is not None:
+        df = df.head(limit)
+    return df.to_markdown(index=False)
 
 
-def render_tennis_matches_today(last_updated: str) -> str:
-    return f"""# Tennis Matches Today
-
-**Last Updated:** {last_updated}
-**Mode:** Template scaffold
-**Spec:** `docs/TENNIS_Data_Bot_Spec.md`
-
-## Schedule Sources
-
-| Source | Website | Status | Records | Notes |
-|--------|---------|--------|---------|-------|
-| Match Schedule | Official ATP/WTA pages | TEMPLATE | 0 | Placeholder until schedule ingestion lands |
-| Fallback Schedule | Mirror provider | OPTIONAL | 0 | Placeholder until fallback schedule adapter lands |
-
-## Matches
-
-| match_id | event_name | tour | surface | round | scheduled_utc | player_a | player_b | best_of | quality_state |
-|----------|------------|------|---------|-------|---------------|----------|----------|---------|---------------|
-| example_masters_r32_player_a_player_b_2026-03-11 | Example Masters | ATP | hard | R32 | 2026-03-11 12:00 UTC | Player A | Player B | 3 | TEMPLATE |
-
-## Pre-Start Watchlist
-
-| match_id | scheduled_utc | refresh_window | note |
-|----------|---------------|----------------|------|
-| example_masters_r32_player_a_player_b_2026-03-11 | 2026-03-11 12:00 UTC | T-120 to T-15 | Replace with near-start refresh candidates |
-"""
+def cmd_schedule(args):
+    """Fetch the current tennis schedule snapshot."""
+    print("Fetching tennis schedule from ESPN...")
+    df = get_tennis_schedule()
+    filepath = save_dataframe(df, "tennis_schedule", args.output, args.format)
+    print(f"Saved {len(df)} matches to {filepath}")
+    return df
 
 
-def render_tennis_quality_report(last_updated: str) -> str:
-    return f"""# Tennis Quality Report
-
-**Last Updated:** {last_updated}
-**Mode:** Template scaffold
-**Spec:** `docs/TENNIS_Data_Bot_Spec.md`
-
-## Source Status
-
-| Source | Freshness SLA | Status | Notes |
-|--------|---------------|--------|-------|
-| Schedule | <= 6h | TEMPLATE | No live schedule ingestion yet |
-| Rankings | <= 72h | TEMPLATE | No rankings snapshot yet |
-| Stats | <= 7d | TEMPLATE | No historical stats ingestion yet |
-| Availability | <= 2h for near-start matches | TEMPLATE | No injury or withdrawal ingestion yet |
-
-## Run Summary
-
-| Metric | Value |
-|--------|-------|
-| total_matches_ingested | 0 |
-| fully_scorable_matches | 0 |
-| skipped_matches | 0 |
-| schema_drift_alerts | 0 |
-
-## Guardrails
-
-| Check | Result | Detail |
-|-------|--------|--------|
-| missing_surface | TEMPLATE | No live matches evaluated yet |
-| player_identity_mapping | TEMPLATE | No live matches evaluated yet |
-| stale_rankings_snapshot | TEMPLATE | No live snapshot available yet |
-| conflicting_status_sources | TEMPLATE | No live availability sources evaluated yet |
-
-## Skip Reasons
-
-| Reason | Count |
-|--------|-------|
-| missing_surface | 0 |
-| missing_player_mapping | 0 |
-| stale_rankings | 0 |
-| conflicting_status | 0 |
-"""
+def cmd_rankings(args):
+    """Fetch the latest ATP and WTA rankings."""
+    print("Fetching tennis rankings from ESPN...")
+    df = get_tennis_rankings()
+    filepath = save_dataframe(df, "tennis_rankings", args.output, args.format)
+    print(f"Saved {len(df)} player rankings to {filepath}")
+    return df
 
 
-def write_text(path: Path, contents: str) -> None:
-    path.parent.mkdir(parents=True, exist_ok=True)
-    path.write_text(contents, encoding="utf-8")
+def cmd_stats(args):
+    """Fetch season stats for top-ranked players."""
+    print("Fetching tennis season stats from ESPN...")
+    df = get_tennis_stats()
+    filepath = save_dataframe(df, "tennis_stats", args.output, args.format)
+    print(f"Saved {len(df)} player stat rows to {filepath}")
+    return df
 
 
-def write_run_log(log_dir: Path, last_updated: str, generated_files: list[Path]) -> Path:
-    log_dir.mkdir(parents=True, exist_ok=True)
-    log_path = log_dir / f"tennis_run_{utc_file_timestamp()}.txt"
-    lines = [
-        "Tennis template pipeline run",
-        f"Last updated: {last_updated}",
-        f"Spec path: {DOCS_PATH}",
-        "",
-        "Generated files:",
+def cmd_injuries(args):
+    """Fetch news-based injury signals."""
+    print("Fetching tennis injury signals from ESPN news...")
+    df = get_tennis_injuries()
+    filepath = save_dataframe(df, "tennis_injuries", args.output, args.format)
+    print(f"Saved {len(df)} injury signal rows to {filepath}")
+    return df
+
+
+def cmd_features(args):
+    """Build the merged tennis feature table."""
+    print("Building tennis feature table...")
+    df = get_tennis_features()
+    filepath = save_dataframe(df, "tennis_features", args.output, args.format)
+    print(f"Saved {len(df)} player feature rows to {filepath}")
+    return df
+
+
+def cmd_all(args):
+    """Fetch all tennis data sources."""
+    results = {}
+
+    print("=" * 50)
+    print("TENNIS DATA BOT - Fetching All Sources")
+    print("=" * 50)
+
+    commands = [
+        ("schedule", "Schedule", cmd_schedule),
+        ("rankings", "Rankings", cmd_rankings),
+        ("stats", "Season Stats", cmd_stats),
+        ("injuries", "Injury Signals", cmd_injuries),
+        ("features", "Feature Table", cmd_features),
     ]
-    lines.extend(f"- {path}" for path in generated_files)
-    write_text(log_path, "\n".join(lines) + "\n")
-    return log_path
+
+    for index, (key, label, command) in enumerate(commands, start=1):
+        print(f"\n[{index}/{len(commands)}] {label}")
+        try:
+            results[key] = command(args)
+        except Exception as exc:
+            print(f"  Error: {exc}")
+            results[key] = None
+
+    print("\n" + "=" * 50)
+    print("COMPLETE")
+    print("=" * 50)
+
+    for key, df in results.items():
+        if df is not None and len(df) > 0:
+            print(f"  {key}: {len(df)} rows")
+        else:
+            print(f"  {key}: FAILED or empty")
+
+    return results
 
 
-def cmd_markdown(args: argparse.Namespace) -> int:
-    last_updated = utc_display_timestamp()
-    output_dir = Path(args.output)
+def cmd_markdown(args):
+    """Fetch all tennis data and write a consolidated markdown report."""
+    from datetime import timezone
 
-    renderers = {
-        "tennis_data.md": render_tennis_data,
-        "tennis_players.md": render_tennis_players,
-        "tennis_matches_today.md": render_tennis_matches_today,
-        "tennis_quality_report.md": render_tennis_quality_report,
-    }
+    print("Fetching all tennis data for markdown export...")
 
-    generated_files = []
-    for filename, renderer in renderers.items():
-        path = output_dir / filename
-        write_text(path, renderer(last_updated))
-        generated_files.append(path)
+    results = {}
+    fetchers = [
+        ("schedule", "Schedule", get_tennis_schedule),
+        ("rankings", "Rankings", get_tennis_rankings),
+        ("stats", "Season Stats", get_tennis_stats),
+        ("injuries", "Injury Signals", get_tennis_injuries),
+        ("features", "Feature Table", get_tennis_features),
+    ]
 
-    log_path = write_run_log(Path(args.log_dir), last_updated, generated_files)
+    for index, (key, label, fetcher) in enumerate(fetchers, start=1):
+        print(f"  [{index}/{len(fetchers)}] {label}...")
+        try:
+            results[key] = fetcher()
+        except Exception as exc:
+            print(f"    Error: {exc}")
+            results[key] = None
 
-    print("Generated tennis markdown templates:")
-    for path in generated_files:
-        print(f"  - {path}")
-    print(f"Run log: {log_path}")
-    return 0
+    now = datetime.now(timezone.utc)
+    md_lines = [
+        "# Tennis Data Snapshot",
+        "",
+        f"**Last Updated:** {now.strftime('%Y-%m-%d %H:%M')} UTC",
+        "",
+        "## Data Sources",
+        "",
+        "| Source | Website | Status | Records |",
+        "|--------|---------|--------|---------|",
+    ]
+
+    sources = [
+        ("Schedule", "site.api.espn.com", "schedule"),
+        ("Rankings", "sports.core.api.espn.com", "rankings"),
+        ("Season Stats", "sports.core.api.espn.com", "stats"),
+        ("Injury Signals", "site.api.espn.com/news", "injuries"),
+        ("Feature Table", "derived", "features"),
+    ]
+
+    for source_name, website, key in sources:
+        df = results.get(key)
+        if df is not None and len(df) > 0:
+            md_lines.append(f"| {source_name} | {website} | OK | {len(df)} |")
+        else:
+            md_lines.append(f"| {source_name} | {website} | FAILED | 0 |")
+
+    md_lines.append("")
+
+    if results.get("schedule") is not None and len(results["schedule"]) > 0:
+        md_lines.extend(
+            [
+                "## Schedule",
+                "",
+                df_to_markdown(
+                    results["schedule"],
+                    [
+                        "TOUR",
+                        "TOURNAMENT",
+                        "DRAW",
+                        "ROUND",
+                        "START_TIME_UTC",
+                        "STATUS_DETAIL",
+                        "PLAYER_1",
+                        "PLAYER_2",
+                    ],
+                    limit=20,
+                ),
+                "",
+            ]
+        )
+
+    if results.get("rankings") is not None and len(results["rankings"]) > 0:
+        md_lines.extend(
+            [
+                "## Rankings",
+                "",
+                df_to_markdown(
+                    results["rankings"],
+                    ["TOUR", "RANK", "PLAYER", "COUNTRY", "RANK_POINTS", "TREND"],
+                    limit=20,
+                ),
+                "",
+            ]
+        )
+
+    if results.get("stats") is not None and len(results["stats"]) > 0:
+        md_lines.extend(
+            [
+                "## Season Stats",
+                "",
+                df_to_markdown(
+                    results["stats"],
+                    [
+                        "TOUR",
+                        "RANK",
+                        "PLAYER",
+                        "SINGLES_WON",
+                        "SINGLES_LOST",
+                        "WIN_PCT",
+                        "SINGLES_TITLES",
+                        "PRIZE_MONEY_USD",
+                    ],
+                    limit=20,
+                ),
+                "",
+            ]
+        )
+
+    if results.get("injuries") is not None and len(results["injuries"]) > 0:
+        md_lines.extend(
+            [
+                "## Injury Signals",
+                "",
+                df_to_markdown(
+                    results["injuries"],
+                    ["TOUR", "PLAYER", "PUBLISHED_UTC", "SIGNAL_KEYWORDS", "HEADLINE"],
+                    limit=20,
+                ),
+                "",
+            ]
+        )
+
+    if results.get("features") is not None and len(results["features"]) > 0:
+        md_lines.extend(
+            [
+                "## Feature Table",
+                "",
+                df_to_markdown(
+                    results["features"],
+                    [
+                        "TOUR",
+                        "TOURNAMENT",
+                        "ROUND",
+                        "PLAYER_1",
+                        "PLAYER_2",
+                        "RANK_CHANGE",
+                        "WIN_PCT_DELTA",
+                        "MODEL_WIN_PROB_1",
+                    ],
+                    limit=20,
+                ),
+                "",
+            ]
+        )
+
+    Path(args.output).mkdir(parents=True, exist_ok=True)
+    filepath = os.path.join(args.output, "tennis_data.md")
+    with open(filepath, "w") as handle:
+        handle.write("\n".join(md_lines))
+
+    print(f"\nSaved consolidated markdown to {filepath}")
+    return results
 
 
-def cmd_docs(_: argparse.Namespace) -> int:
-    if not DOCS_PATH.exists():
-        print(f"Tennis spec document is missing: {DOCS_PATH}", file=sys.stderr)
-        return 1
-
-    print(DOCS_PATH)
-    return 0
-
-
-def main() -> int:
+def main():
     parser = argparse.ArgumentParser(
-        description="Tennis Data Bot - template generator for tennis pipeline outputs",
+        description="Tennis Data Bot - Extract schedule, rankings, stats, and injury signals",
         formatter_class=argparse.RawDescriptionHelpFormatter,
         epilog=__doc__,
     )
 
     parser.add_argument(
         "command",
-        choices=["markdown", "docs"],
-        help="Use 'markdown' to write template outputs or 'docs' to print the tennis spec path",
+        choices=["all", "schedule", "rankings", "stats", "injuries", "features", "markdown"],
+        help="Data source to fetch (use 'markdown' for a consolidated file)",
     )
+
+    parser.add_argument(
+        "--format",
+        choices=["csv", "json"],
+        default="csv",
+        help="Output format (default: csv)",
+    )
+
     parser.add_argument(
         "--output",
-        default="./data",
-        help="Output directory for markdown files (default: ./data)",
-    )
-    parser.add_argument(
-        "--log-dir",
-        default="./outputs",
-        help="Run-log directory (default: ./outputs)",
+        default="./output",
+        help="Output directory (default: ./output)",
     )
 
     args = parser.parse_args()
 
     commands = {
+        "all": cmd_all,
+        "schedule": cmd_schedule,
+        "rankings": cmd_rankings,
+        "stats": cmd_stats,
+        "injuries": cmd_injuries,
+        "features": cmd_features,
         "markdown": cmd_markdown,
-        "docs": cmd_docs,
     }
-    return commands[args.command](args)
+
+    try:
+        commands[args.command](args)
+    except KeyboardInterrupt:
+        print("\nAborted.")
+        sys.exit(1)
+    except Exception as exc:
+        print(f"Error: {exc}")
+        sys.exit(1)
 
 
 if __name__ == "__main__":
-    sys.exit(main())
+    main()
