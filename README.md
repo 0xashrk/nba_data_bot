@@ -45,14 +45,11 @@ Output files are saved to `./output/` by default with timestamps (e.g., `advance
 
 ## Tennis
 
-The tennis pathway is scaffolded separately in `main_tennis.py` so it does not change NBA behavior. It currently generates spec-aligned markdown templates and a local run log for the tennis pipeline outputs described in `docs/TENNIS_Data_Bot_Spec.md`.
+The tennis pathway is scaffolded separately in `main_tennis.py` so it does not change NBA behavior. It currently generates spec-aligned markdown outputs for the tennis pipeline described in `docs/TENNIS_Data_Bot_Spec.md`.
 
 ```bash
 # Generate tennis markdown templates in ./data
 python3 main_tennis.py markdown --output ./data
-
-# Print the local tennis spec path
-python3 main_tennis.py docs
 ```
 
 Generated tennis files:
@@ -62,7 +59,6 @@ data/tennis_data.md
 data/tennis_players.md
 data/tennis_matches_today.md
 data/tennis_quality_report.md
-outputs/tennis_run_YYYY-MM-DD_HHMMSS.txt
 ```
 
 The committed markdown files are placeholders with source status tables and sample rows so downstream tooling can integrate against a stable shape before live tennis scrapers land.
@@ -100,9 +96,8 @@ Tennis template outputs can be refreshed with:
 
 This script:
 1. Generates the tennis markdown templates in `data/`
-2. Writes a local run log under `outputs/`
-3. Commits and pushes only when the tennis markdown files changed
-4. Commits are authored as "Tennis Bot"
+2. Commits and pushes only when the tennis markdown files changed
+3. Commits are authored as "Tennis Bot"
 
 ## Project Structure
 
@@ -111,9 +106,15 @@ nba_data_bot/
 ├── main.py
 ├── main_tennis.py
 ├── scraper/
-│   ├── teamrankings.py
-│   ├── nba_stats.py
-│   └── injury_report.py
+│   ├── teamrankings.py        # NBA
+│   ├── nba_stats.py           # NBA
+│   ├── injury_report.py       # NBA
+│   ├── tennis_common.py       # Tennis shared
+│   ├── tennis_schedule.py     # Tennis
+│   ├── tennis_rankings.py     # Tennis
+│   ├── tennis_stats.py        # Tennis
+│   ├── tennis_injuries.py     # Tennis
+│   └── tennis_features.py     # Tennis
 ├── scripts/
 │   ├── update_and_push.sh
 │   └── update_and_push_tennis.sh
@@ -126,7 +127,6 @@ nba_data_bot/
 ├── docs/
 │   └── TENNIS_Data_Bot_Spec.md
 ├── output/
-├── outputs/
 └── requirements.txt
 ```
 

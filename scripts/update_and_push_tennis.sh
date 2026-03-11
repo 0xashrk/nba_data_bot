@@ -22,7 +22,7 @@ if ! command -v "$PYTHON_BIN" >/dev/null 2>&1; then
     fi
 fi
 
-"$PYTHON_BIN" main_tennis.py markdown --output ./data --log-dir ./outputs
+"$PYTHON_BIN" main_tennis.py markdown --output ./data
 
 git add data/tennis_data.md \
     data/tennis_players.md \
