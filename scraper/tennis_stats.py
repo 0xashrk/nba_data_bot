@@ -2,10 +2,14 @@
 ESPN-backed tennis season stats scraper.
 """
 
+import logging
+
 import pandas as pd
 
 from .tennis_common import DEFAULT_TOURS, TOUR_LABELS, fetch_json, normalize_ref, normalize_tours, tour_slug
-from .tennis_rankings import _get_athlete_payload, _get_ranking_payload
+from .tennis_rankings import get_athlete_payload, get_ranking_payload
+
+LOGGER = logging.getLogger(__name__)
 
 
 STAT_NAME_MAP = {
@@ -60,13 +64,18 @@ def get_tennis_stats(
     row_limit = limit if limit is not None else top_n
 
     for tour in normalize_tours(tours):
-        ranking_payload = _get_ranking_payload(tour_slug(tour))
+        ranking_payload = get_ranking_payload(tour_slug(tour))
         ranks = ranking_payload.get("ranks", [])
         if row_limit is not None:
             ranks = ranks[:row_limit]
 
         for rank_entry in ranks:
-            athlete = _get_athlete_payload(rank_entry["athlete"]["$ref"])
+            athlete_ref = rank_entry.get("athlete", {}).get("$ref")
+            if not athlete_ref:
+                LOGGER.warning("Skipping stats row without athlete ref for %s: %s", tour, rank_entry)
+                continue
+
+            athlete = get_athlete_payload(athlete_ref)
             stats_ref = athlete.get("statistics", {}).get("$ref")
             stats_payload = fetch_json(normalize_ref(stats_ref)) if stats_ref else {}
             stat_values = _extract_stat_values(stats_payload)

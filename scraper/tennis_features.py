@@ -42,6 +42,13 @@ FEATURE_COLUMNS = [
     "QUALITY_STATE",
 ]
 
+WEIGHT_RANK_CHANGE = 0.03
+WEIGHT_WIN_PCT_DELTA = 2.5
+WEIGHT_TITLE_DELTA = 0.15
+WEIGHT_INJURY_DELTA = 0.2
+MAX_RANK_CHANGE_CONTRIBUTION = 100.0
+MAX_TITLE_DELTA_CONTRIBUTION = 5.0
+
 
 def _normalize_name(value: str | None) -> str:
     """Normalize a player name for loose cross-source joins."""
@@ -181,16 +188,16 @@ def get_tennis_features(
         score = 0.0
         available_signals = 0
         if rank_change is not None:
-            score += max(min(rank_change, 100.0), -100.0) * 0.03
+            score += max(min(rank_change, MAX_RANK_CHANGE_CONTRIBUTION), -MAX_RANK_CHANGE_CONTRIBUTION) * WEIGHT_RANK_CHANGE
             available_signals += 1
         if win_pct_delta is not None:
-            score += win_pct_delta * 2.5
+            score += win_pct_delta * WEIGHT_WIN_PCT_DELTA
             available_signals += 1
         if title_delta is not None:
-            score += max(min(title_delta, 5.0), -5.0) * 0.15
+            score += max(min(title_delta, MAX_TITLE_DELTA_CONTRIBUTION), -MAX_TITLE_DELTA_CONTRIBUTION) * WEIGHT_TITLE_DELTA
             available_signals += 1
 
-        score += (injury_count_2 - injury_count_1) * 0.2
+        score += (injury_count_2 - injury_count_1) * WEIGHT_INJURY_DELTA
         model_win_prob_1 = 1.0 / (1.0 + math.exp(-score))
         model_win_prob_2 = 1.0 - model_win_prob_1
 

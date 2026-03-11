@@ -17,9 +17,10 @@ Options:
 """
 
 import argparse
+import logging
 import os
 import sys
-from datetime import datetime
+from datetime import datetime, timezone
 from pathlib import Path
 
 import pandas as pd
@@ -32,8 +33,10 @@ from scraper import (
     get_tennis_stats,
 )
 
+LOGGER = logging.getLogger(__name__)
 
-def save_dataframe(df: pd.DataFrame, name: str, output_dir: str, fmt: str, timestamp: str = None) -> str:
+
+def save_dataframe(df: pd.DataFrame, name: str, output_dir: str, fmt: str, timestamp: str | None = None) -> str:
     """Save a DataFrame and return the output path."""
     if timestamp is None:
         timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
@@ -49,7 +52,7 @@ def save_dataframe(df: pd.DataFrame, name: str, output_dir: str, fmt: str, times
     return filepath
 
 
-def df_to_markdown(df: pd.DataFrame, columns: list[str] = None, limit: int = None) -> str:
+def df_to_markdown(df: pd.DataFrame, columns: list[str] | None = None, limit: int | None = None) -> str:
     """Convert a DataFrame to a markdown table."""
     if columns:
         available_columns = [column for column in columns if column in df.columns]
@@ -125,6 +128,7 @@ def cmd_all(args):
         try:
             results[key] = command(args)
         except Exception as exc:
+            LOGGER.exception("Failed to fetch tennis %s data", key)
             print(f"  Error: {exc}")
             results[key] = None
 
@@ -143,7 +147,6 @@ def cmd_all(args):
 
 def cmd_markdown(args):
     """Fetch all tennis data and write a consolidated markdown report."""
-    from datetime import timezone
 
     print("Fetching all tennis data for markdown export...")
 
@@ -161,6 +164,7 @@ def cmd_markdown(args):
         try:
             results[key] = fetcher()
         except Exception as exc:
+            LOGGER.exception("Failed to fetch tennis %s data during markdown generation", key)
             print(f"    Error: {exc}")
             results[key] = None
 

@@ -2,9 +2,13 @@
 ESPN-backed tennis schedule scraper.
 """
 
+import logging
+
 import pandas as pd
 
 from .tennis_common import DEFAULT_TOURS, SITE_API_BASE, TOUR_LABELS, fetch_json, normalize_tours, tour_slug
+
+LOGGER = logging.getLogger(__name__)
 
 
 SCHEDULE_COLUMNS = [
@@ -42,8 +46,14 @@ def _score_line(competitor: dict) -> str:
         score = line.get("value")
         if score is None:
             continue
-        if float(score).is_integer():
-            values.append(str(int(score)))
+        try:
+            numeric_score = float(score)
+        except (TypeError, ValueError):
+            values.append(str(score))
+            continue
+
+        if numeric_score.is_integer():
+            values.append(str(int(numeric_score)))
         else:
             values.append(str(score))
 
@@ -73,8 +83,13 @@ def get_tennis_schedule(
     seen_match_ids = set()
 
     for endpoint_tour in normalize_tours(tours):
-        scoreboard_url = f"{SITE_API_BASE}/{tour_slug(endpoint_tour)}/scoreboard"
-        payload = fetch_json(scoreboard_url)
+        tour_id = tour_slug(endpoint_tour)
+        scoreboard_url = f"{SITE_API_BASE}/{tour_id}/scoreboard"
+        try:
+            payload = fetch_json(scoreboard_url)
+        except Exception:
+            LOGGER.warning("Failed to fetch tennis schedule for %s from %s", tour_id, scoreboard_url, exc_info=True)
+            continue
 
         for event in payload.get("events", []):
             tournament_name = event.get("shortName") or event.get("name")

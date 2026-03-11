@@ -14,21 +14,32 @@ DEFAULT_INJURY_KEYWORDS = (
     "injury",
     "injured",
     "withdraw",
+    "withdraws",
+    "withdrawn",
     "withdrew",
     "withdrawal",
-    "retire",
-    "retired",
+    "retire due to",
+    "retired due to",
+    "retired with",
     "illness",
-    "pain",
-    "ankle",
-    "arm",
-    "back",
-    "elbow",
-    "hamstring",
-    "hip",
-    "knee",
-    "shoulder",
-    "wrist",
+    "ankle injury",
+    "ankle pain",
+    "arm injury",
+    "back pain",
+    "back spasms",
+    "elbow injury",
+    "hamstring injury",
+    "hip injury",
+    "knee injury",
+    "knee issue",
+    "knee pain",
+    "shoulder injury",
+    "wrist injury",
+)
+
+EXCLUSION_PATTERNS = (
+    r"\bback-to-back\b",
+    r"\bforearm\b",
 )
 
 INJURY_COLUMNS = [
@@ -42,6 +53,23 @@ INJURY_COLUMNS = [
     "URL",
     "SIGNAL_KEYWORDS",
 ]
+
+
+def _match_injury_keywords(haystack: str, keywords: tuple[str, ...]) -> list[str]:
+    """Match injury keywords after removing common false-positive phrases."""
+    if not haystack:
+        return []
+
+    filtered_text = haystack
+    for pattern in EXCLUSION_PATTERNS:
+        filtered_text = re.sub(pattern, " ", filtered_text, flags=re.IGNORECASE)
+
+    matches = set()
+    for keyword in keywords:
+        pattern = rf"\b{re.escape(keyword)}\b"
+        matches.update(match.group(0).lower() for match in re.finditer(pattern, filtered_text, re.IGNORECASE))
+
+    return sorted(matches)
 
 
 def _parse_timestamp(value: str | None) -> datetime | None:
@@ -67,7 +95,6 @@ def get_tennis_injuries(
     becomes reliably available without authentication.
     """
     rows = []
-    pattern = re.compile("|".join(re.escape(keyword) for keyword in keywords), re.IGNORECASE)
     seen_rows = set()
     cutoff = None
     if lookback_days is not None:
@@ -86,7 +113,7 @@ def get_tennis_injuries(
             headline = article.get("headline", "")
             description = article.get("description", "")
             haystack = " ".join(part for part in [headline, description] if part)
-            matches = sorted({match.group(0).lower() for match in pattern.finditer(haystack)})
+            matches = _match_injury_keywords(haystack, keywords)
             if not matches:
                 continue
 

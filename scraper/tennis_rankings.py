@@ -2,6 +2,8 @@
 ESPN-backed tennis rankings scraper.
 """
 
+import logging
+
 import pandas as pd
 
 from .tennis_common import (
@@ -13,6 +15,8 @@ from .tennis_common import (
     normalize_tours,
     tour_slug,
 )
+
+LOGGER = logging.getLogger(__name__)
 
 
 RANKING_COLUMNS = [
@@ -33,17 +37,31 @@ RANKING_COLUMNS = [
 ]
 
 
-def _get_ranking_payload(tour: str) -> dict:
+def get_ranking_payload(tour: str) -> dict:
     """Fetch the latest ranking payload for a tour."""
     index_url = f"{CORE_API_BASE}/leagues/{tour}/rankings"
     index_payload = fetch_json(index_url)
-    ranking_ref = normalize_ref(index_payload["items"][0]["$ref"])
+    items = index_payload.get("items")
+    if not isinstance(items, list) or not items:
+        LOGGER.warning("Ranking index returned no items for %s: %s", index_url, index_payload)
+        return {"ranks": []}
+
+    ranking_ref = items[0].get("$ref")
+    if not ranking_ref:
+        LOGGER.warning("Ranking index item missing $ref for %s: %s", index_url, items[0])
+        return {"ranks": []}
+
+    ranking_ref = normalize_ref(ranking_ref)
     return fetch_json(ranking_ref)
 
 
-def _get_athlete_payload(ref: str) -> dict:
+def get_athlete_payload(ref: str) -> dict:
     """Fetch a player payload from an ESPN ref."""
     return fetch_json(normalize_ref(ref))
+
+
+_get_ranking_payload = get_ranking_payload
+_get_athlete_payload = get_athlete_payload
 
 
 def get_tennis_rankings(
@@ -60,7 +78,7 @@ def get_tennis_rankings(
     row_limit = limit if limit is not None else top_n
 
     for tour in normalize_tours(tours):
-        ranking_payload = _get_ranking_payload(tour_slug(tour))
+        ranking_payload = get_ranking_payload(tour_slug(tour))
         last_updated = ranking_payload.get("lastUpdated")
 
         ranks = ranking_payload.get("ranks", [])
@@ -68,7 +86,12 @@ def get_tennis_rankings(
             ranks = ranks[:row_limit]
 
         for rank_entry in ranks:
-            athlete = _get_athlete_payload(rank_entry["athlete"]["$ref"])
+            athlete_ref = rank_entry.get("athlete", {}).get("$ref")
+            if not athlete_ref:
+                LOGGER.warning("Skipping ranking row without athlete ref for %s: %s", tour, rank_entry)
+                continue
+
+            athlete = get_athlete_payload(athlete_ref)
             links = athlete.get("links", [])
             player_url = next(
                 (link["href"] for link in links if "playercard" in link.get("rel", [])),
